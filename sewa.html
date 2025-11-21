@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sewa Bot - Ditzz4you</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    #video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+    }
+
+    /* ANIMASI FADE-IN */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(30, 30, 47, 0.95);
+      border-radius: 12px;
+      position: relative;
+      z-index: 2;
+    }
+    h2 {
+      color: #FFD700;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+    input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      background: #2a2a40;
+      border: none;
+      border-radius: 8px;
+      color: white;
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .radio-option {
+      background: #2a2a40;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .radio-option input {
+      margin-right: 8px;
+    }
+    .submit-btn {
+      margin-top: 20px;
+      padding: 12px;
+      background: #FFD700;
+      color: #1e1e2f;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .submit-btn:hover {
+      background: #e6c200;
+    }
+    .info-box {
+      margin-top: 20px;
+      padding: 10px;
+      background: #2a2a40;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .copy-btn {
+      background: #FFD700;
+      color: #1e1e2f;
+      border: none;
+      padding: 6px 12px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .copy-btn:hover {
+      background: #e6c200;
+    }
+    #danaNumber {
+      display: none;
+    }
+    .qris-img {
+      width: 200px;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+    .panduan {
+      margin: 20px 0;
+      padding: 15px;
+      background: linear-gradient(135deg, #2c2c41, #1e1e2f);
+      border-left: 5px solid #FFD700;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .panduan h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #FFD700;
+      font-size: 16px;
+    }
+    .panduan ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .panduan ul li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop id="video-bg">
+    <source src="background.mp4" type="video/mp4">
+    Browser kamu tidak mendukung tag video.
+  </video>
+
+  <!-- Container dengan efek masuk -->
+  <div class="container fade-in">
+    <h2>Format Sewa Bot Push Kontak</h2>
+
+    <div class="panduan">
+      <h3>1. Panduan Pemesanan</h3>
+      <ul>
+        <li>• Isi nama Pembeli / Nama kamu dengan benar.</li>
+        <li>• Pilih jenis bot sesuai durasi yang diinginkan.</li>
+        <li>• Pilih metode pembayaran Dana atau QRIS.</li>
+        <li>• Upload bukti transfer yang jelas.</li>
+        <li>• Klik tombol “Kirim Pesanan”.</li>
+        <li>• Lalu Akan Di Pandu Untuk Ke WhatsApp Admin.</li>
+        <li>• Pesananmu Akan Diproses Setelah Admin Memverifikasi Pembayaran.</li>
+      </ul>
+    </div>
+
+    <form action="kirim.php" method="POST" enctype="multipart/form-data">
+      <label for="nama_server">2. Nama Pengguna / Server</label>
+      <input type="text" id="nama_server" name="nama_server" placeholder="Contoh: DitzzUser" required>
+
+<!-- Tambahan Input Nomor WhatsApp -->
+<label for="nomor_wa">Nomor WhatsApp</label>
+<input type="text" id="nomor_wa" name="nomor_wa" placeholder="Contoh: 0856xxxxxxx" required>
+
+      <label>3. Pilih Bot</label>
+      <div class="radio-group">
+        <label class="radio-option"><input type="radio" name="panel" value="Bot Push Kontak 1 Hari" required> Bot Push Kontak 1 Hari - Rp 2.000</label>
+        <label class="radio-option"><input type="radio" name="panel" value="Bot Push Kontak 3 Hari"> Bot Push Kontak 3 Hari - Rp 5.000</label>
+        <label class="radio-option"><input type="radio" name="panel" value="Bot Push Kontak 1 Minggu"> Bot Push Kontak 1 Minggu - Rp 8.000</label>
+        <label class="radio-option"><input type="radio" name="panel" value="Bot Push Kontak 1 Bulan"> Bot Push Kontak 1 Bulan - Rp 15.000</label>
+        <label class="radio-option"><input type="radio" name="panel" value="Bot Push Kontak Permanen"> Bot Push Kontak Permanen - Rp 25.000</label>
+      </div>
+
+      <label>4. Metode Pembayaran</label>
+      <div class="radio-group">
+        <label class="radio-option"><input type="radio" name="metode" value="💸 Dana" required> 💸 Dana</label>
+        <label class="radio-option"><input type="radio" name="metode" value="📱 QRIS"> 📱 QRIS</label>
+      </div>
+
+      <div class="info-box">
+        <button class="copy-btn" onclick="copyDana()" type="button">Salin Nomor Dana</button><br>
+        <span id="danaNumber">085609018981</span><br>
+        <img src="qris.jpg" alt="QRIS" class="qris-img" />
+      </div>
+
+      <label for="bukti_transfer">5. Upload Bukti Pembayaran</label>
+      <input type="file" name="bukti_transfer" id="bukti_transfer" accept="image/*" required>
+
+      <button type="submit" class="submit-btn">Kirim Pesanan</button>
+    </form>
+  </div>
+
+  <script>
+    function copyDana() {
+      const danaNumber = document.getElementById("danaNumber").innerText;
+      navigator.clipboard.writeText(danaNumber).then(function () {
+        alert("✅ Nomor Dana berhasil disalin!");
+      }, function () {
+        alert("❌ Gagal menyalin nomor Dana.");
+      });
+    }
+
+    // Tambahan: pastikan fade-in dipicu
+    window.addEventListener("DOMContentLoaded", () => {
+      document.querySelector(".fade-in").classList.add("fade-in");
+    });
+  </script>
+
+</body>
+</html>
