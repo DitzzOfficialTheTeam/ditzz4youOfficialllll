@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Pemesanan Script Bot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #1e1e2f;
+      color: #fff;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #2a2a40;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    h2 {
+      text-align: center;
+      color: #FFD700;
+    }
+    .section-title {
+      font-weight: bold;
+      color: #FFD700;
+      margin-bottom: 10px;
+    }
+    .panduan {
+      background: #383857;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .panduan ol {
+      padding-left: 18px;
+      margin: 0;
+    }
+    .panduan li {
+      margin-bottom: 8px;
+    }
+    .produk, .payment {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .produk label, .payment label {
+      background: #383857;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .produk label:hover, .payment label:hover {
+      background: #47476b;
+    }
+    .produk input, .payment input {
+      margin-right: 10px;
+    }
+    .info-box {
+      margin-top: 15px;
+      padding: 15px;
+      background: #3a3a5a;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .copy-btn {
+      background: #FFD700;
+      color: #1e1e2f;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    #danaNumber {
+      display: none;
+    }
+    .qris-image {
+      max-width: 200px;
+      display: block;
+      margin: 10px auto 0;
+      border-radius: 10px;
+    }
+    input[type="file"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 10px;
+      background: #4b4b6b;
+      color: white;
+    }
+    .submit-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #FFD700;
+      color: #1e1e2f;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background: #e6c200;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Form Pemesanan Script Bot</h2>
+
+  <!-- Panduan -->
+  <div class="panduan">
+    <div class="section-title">1. Panduan Pemesanan</div>
+    <ol>
+      <li>Isi nama pembeli atau server Anda.</li>
+      <li>Pilih produk yang ingin Anda beli.</li>
+      <li>Pilih metode pembayaran: Dana atau QRIS.</li>
+      <li>Upload bukti transfer pembayaran Anda.</li>
+      <li>Klik tombol <strong>Kirim Pesanan</strong>.</li>
+      <li>Anda akan diarahkan ke WhatsApp admin untuk verifikasi dan pengiriman produk.</li>
+    </ol>
+  </div>
+
+  <!-- Formulir -->
+  <form action="kirim.php" method="POST" enctype="multipart/form-data">
+
+    <label for="nama">2. Nama Pembeli / Nama Anda</label>
+    <input type="text" name="nama_server" id="nama" placeholder="Contoh: Ditzz" required>
+
+    <div class="section-title">3. Pilih Produk</div>
+    <div class="produk">
+      <label>
+        <input type="radio" name="panel" value="Script Bot Push Kontak X JPM - Rp 10.000" required>
+        Script Bot Push Kontak X JPM - Rp 10.000
+      </label>
+      <label>
+        <input type="radio" name="panel" value="Script Bot Cpanel V1 - Rp 7.000">
+        Script Bot Cpanel V1 - Rp 7.000
+      </label>
+    </div>
+
+    <div class="section-title">4. Pilih Metode Pembayaran</div>
+    <div class="payment">
+      <label><input type="radio" name="metode" value="💸 Dana" required> 💸 Dana</label>
+      <label><input type="radio" name="metode" value="📱 QRIS"> 📱 QRIS</label>
+    </div>
+
+    <div class="info-box">
+      <button class="copy-btn" type="button" onclick="copyDana()">Salin Nomor Dana</button>
+      <span id="danaNumber">085609018981</span>
+      <img src="qris.jpg" alt="QRIS Pembayaran" class="qris-image">
+    </div>
+
+    <label for="bukti_transfer">5. Upload Bukti Pembayaran</label>
+    <input type="file" name="bukti_transfer" id="bukti_transfer" accept="image/*" required>
+
+    <button type="submit" class="submit-btn">Kirim Pesanan</button>
+  </form>
+</div>
+
+<script>
+  function copyDana() {
+    const danaNumber = document.getElementById("danaNumber").innerText;
+    navigator.clipboard.writeText(danaNumber)
+      .then(() => alert("✅ Nomor Dana berhasil disalin!"))
+      .catch(() => alert("❌ Gagal menyalin nomor Dana."));
+  }
+</script>
+
+</body>
+</html>
